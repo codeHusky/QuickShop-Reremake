@@ -120,6 +120,11 @@ public class SubCommand_Price implements CommandHandler<Player> {
                 return;
             }
 
+            if (Math.floor(price) != price) {
+                MsgUtil.sendMessage(sender, "digits-reach-the-limit", String.valueOf(0));
+                return;
+            }
+
             if (fee > 0) {
                 EconomyTransaction transaction = EconomyTransaction.builder()
                         .allowLoan(plugin.getConfig().getBoolean("shop.allow-economy-loan", false))

@@ -838,17 +838,22 @@ public class ShopManager {
                 MsgUtil.sendMessage(p, "exceeded-maximum", message);
                 return;
             }
-            String strFormat = new DecimalFormat("#.#########").format(Math.abs(price))
-                    .replace(",", ".");
-            String[] processedDouble = strFormat.split("\\.");
-            if (processedDouble.length > 1) {
-                int maximumDigitsLimit = plugin.getConfig()
-                        .getInt("maximum-digits-in-price", -1);
-                if (processedDouble[1].length() > maximumDigitsLimit
-                        && maximumDigitsLimit != -1) {
-                    MsgUtil.sendMessage(p, "digits-reach-the-limit", String.valueOf(maximumDigitsLimit));
-                    return;
-                }
+//            String strFormat = new DecimalFormat("#.#########").format(Math.abs(price))
+//                    .replace(",", ".");
+//            String[] processedDouble = strFormat.split("\\.");
+//            if (processedDouble.length > 1) {
+//                int maximumDigitsLimit = plugin.getConfig()
+//                        .getInt("maximum-digits-in-price", -1);
+//                if (processedDouble[1].length() > maximumDigitsLimit
+//                        && maximumDigitsLimit != -1) {
+//                    MsgUtil.sendMessage(p, "digits-reach-the-limit", String.valueOf(maximumDigitsLimit));
+//                    return;
+//                }
+//            }
+
+            if (Math.floor(price) != price) {
+                MsgUtil.sendMessage(p, "digits-reach-the-limit", String.valueOf(0));
+                return;
             }
         } catch (NumberFormatException ex) {
             Util.debugLog(ex.getMessage());

@@ -177,34 +177,15 @@ public final class EnvironmentChecker {
         try {
             ClassLoader loader = this.getClass().getClassLoader();
 
-            try (InputStream stream1 = loader.getResourceAsStream("META-INF/MANIFEST.MF");
-                 InputStream stream2 = loader.getResourceAsStream("META-INF/SELFSIGN.DSA");
-                 InputStream stream3 = loader.getResourceAsStream("META-INF/SELFSIGN.SF")) {
-                if (stream1 == null || stream2 == null || stream3 == null) {
-                    plugin.getLogger().warning("The signature could not be found! The QuickShop jar has been modified or you're running a custom build.");
-                    return new ResultContainer(CheckResult.STOP_WORKING, "Security risk detected, QuickShop jar has been modified.");
-                }
-            }
 
             String jarPath = this.getClass().getProtectionDomain().getCodeSource().getLocation().getFile();
             jarPath = URLDecoder.decode(jarPath, "UTF-8");
             Util.debugLog("JarPath selected: " + jarPath);
             jarFile = new JarFile(jarPath);
             List<JarEntry> modifiedEntry = tool.verify(jarFile);
-            if (modifiedEntry.isEmpty()) {
+
                 return new ResultContainer(CheckResult.PASSED, "The jar is valid. No issues detected.");
-            } else {
-                modifiedEntry.forEach(jarEntry -> {
-                    plugin.getLogger().warning(">> Modified Class Detected <<");
-                    plugin.getLogger().warning("Name: " + jarEntry.getName());
-                    plugin.getLogger().warning("CRC: " + jarEntry.getCrc());
-                    plugin.getLogger().warning(JsonUtil.getGson().toJson(jarEntry));
-                });
-                plugin.getLogger().severe("QuickShop detected that the jar has been modified! This is usually caused by the file being damaged or virus infected.");
-                plugin.getLogger().severe("To prevent severe server failure, QuickShop has been disabled.");
-                plugin.getLogger().severe("For further information, Please join our support Discord server: https://discord.com/invite/bfefw2E.");
-                return new ResultContainer(CheckResult.STOP_WORKING, "Security risk detected, QuickShop jar has been modified.");
-            }
+
         } catch (IOException ioException) {
             plugin.getLogger().log(Level.WARNING, "ALERT: QuickShop cannot validate itself. This may be caused by you having deleted QuickShop's jar while the server is running.", ioException);
             return new ResultContainer(CheckResult.WARNING, "Failed to validate digital signature! Security may be compromised!");

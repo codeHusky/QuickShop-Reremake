@@ -38,7 +38,7 @@ public class PlotSquaredIntegrationProxy extends QSIntegratedPlugin {
             if (plugin.getServer().getPluginManager().getPlugin("PlotSquared").getClass().getPackage().getName().contains("intellectualsite")) {
                 plotSquared = new PlotSquaredIntegrationV4(instance);
             } else if (Util.isClassAvailable("com.plotsquared.core.configuration.Caption")) {
-                plotSquared = new PlotSquaredIntegrationV5(instance);
+                throw new UnsupportedOperationException("thing no work no more");
             } else {
                 plotSquared = new PlotSquaredIntegrationV6(instance);
             }
