@@ -686,17 +686,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>org.maxgamer.quickshop.integration</groupId>
-            <artifactId>PlotSquared5</artifactId>
-            <version>1.1</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>*</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
         <!--PlotSquared 6 Core-->
         <dependency>
             <groupId>com.plotsquared</groupId>
